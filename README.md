@@ -1,14 +1,18 @@
 # clj-weka
 
-A Clojure library designed to ... well, that part is up to you.
+Clojure wrapper for the java machine learning library weka
 
 ## Usage
 
-FIXME
+Convert between csv, arff and edn
 
-## License
+```clojure
+(require '[clj-weka.preprocess.convert :as convert])
 
-Copyright © 2017 FIXME
-
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+(-> "data.arff" slurp arff->csv)
+(-> "data.csv" slurp csv->arff)
+(-> "data.csv" slurp csv->edn)
+(edn->csv [{:a 1 :b "hello"}])
+(edn->arff [{:a 1 :b "hello"}])
+(-> "data.arff" slurp arff->edn)
+```

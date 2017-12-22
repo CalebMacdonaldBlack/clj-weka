@@ -40,7 +40,7 @@
         :args (s/cat :s string?)
         :ret string?)
 
-(defn convert-type
+(defn- convert-type
   "Converts string to another datatype if matches"
   [value]
   (try
