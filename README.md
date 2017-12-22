@@ -10,9 +10,14 @@ Convert between csv, arff and edn
 (require '[clj-weka.preprocess.convert :as convert])
 
 (-> "data.arff" slurp arff->csv)
+
 (-> "data.csv" slurp csv->arff)
+
 (-> "data.csv" slurp csv->edn)
+
 (edn->csv [{:a 1 :b "hello"}])
+
 (edn->arff [{:a 1 :b "hello"}])
+
 (-> "data.arff" slurp arff->edn)
 ```
