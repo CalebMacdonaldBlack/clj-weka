@@ -48,3 +48,12 @@
     (map #(-> (zipmap header %)
               (walk/keywordize-keys))
          (map #(map convert-type %) rows))))
+
+(defn edn->csv
+  "Converts edn to csv"
+  [coll]
+  (let [headers (map name (keys (first coll)))
+        rows (map vals coll)
+        csv-rows (map (partial string/join ",") rows)
+        csv-header (string/join "," headers)]
+    (str (string/join "\n" (cons csv-header csv-rows)) "\n")))

@@ -14,9 +14,13 @@
 
 (deftest csv->edn-test
   (testing "Converts csv to edn"
-    (is (= '({:a 1
-              :b "hello"})
+    (is (= '({:a 1 :b "hello"})
            (convert/csv->edn "a,b\n1,hello\n")))))
+
+(deftest edn->csv-test
+  (testing "Converts edn to csv"
+    (is (= (convert/edn->csv '({:a 1 :b "hello"}))
+           "a,b\n1,hello\n"))))
 
 (run-tests 'clj-weka.preprocess.convert-test)
 
