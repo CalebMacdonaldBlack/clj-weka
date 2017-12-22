@@ -57,3 +57,13 @@
         csv-rows (map (partial string/join ",") rows)
         csv-header (string/join "," headers)]
     (str (string/join "\n" (cons csv-header csv-rows)) "\n")))
+
+(defn edn->arff
+  "Converts edn to arff"
+  [coll]
+  (-> coll edn->csv csv->arff))
+
+(defn arff->edn
+  "Converts arff to edn"
+  [arff]
+  (-> arff arff->csv csv->edn))

@@ -19,8 +19,18 @@
 
 (deftest edn->csv-test
   (testing "Converts edn to csv"
-    (is (= (convert/edn->csv '({:a 1 :b "hello"}))
-           "a,b\n1,hello\n"))))
+    (is (= "a,b\n1,hello\n"
+           (convert/edn->csv '({:a 1 :b "hello"}))))))
+
+(deftest edn->arff-test
+  (testing "Converts edn to arff"
+    (is (= "@relation stream\n\n@attribute a numeric\n@attribute b {hello}\n\n@data\n1,hello\n"
+           (convert/edn->arff '({:a 1 :b "hello"}))))))
+
+(deftest arff->edn-test
+  (testing "Converts arff to edn"
+    (is (= '({:A 1, :B "hello"})
+           (convert/arff->edn "@relation stream\n\n@attribute A numeric\n@attribute B {hello}\n\n@data\n1,hello\n")))))
 
 (run-tests 'clj-weka.preprocess.convert-test)
 
