@@ -1,6 +1,3 @@
 (defproject clj-weka "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
-  :license {:name "Eclipse Public License"
-            :url "http://www.eclipse.org/legal/epl-v10.html"}
+  :description "Clojure wrapper for the java machine learning library weka"
   :dependencies [[org.clojure/clojure "1.8.0"]])
