@@ -31,3 +31,5 @@
   (testing "Converts arff to edn"
     (is (= '({:A 1, :B "hello"})
            (convert/arff->edn "@relation stream\n\n@attribute A numeric\n@attribute B {hello}\n\n@data\n1,hello\n")))))
+
+(run-tests 'clj-weka.preprocess.convert-test)

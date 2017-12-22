@@ -1,12 +1,16 @@
 (ns clj-weka.preprocess.convert
   (:require [clj-weka.util :as util]
             [clojure.string :as string]
+            [clojure.spec.alpha :as spec]
             [clojure.data.csv :as csv]
-            [clojure.walk :as walk])
+            [clojure.walk :as walk]
+            [orchestra.spec.test :as st]
+            [clojure.spec.alpha :as s])
   (:import
     (weka.core Instances)
     (weka.core.converters CSVLoader ArffSaver ArffLoader CSVSaver)
     (java.io InputStream OutputStream ByteArrayOutputStream)))
+
 (defn- convert
   "converts string dataset"
   [loader saver text]
@@ -23,10 +27,18 @@
   [s]
   (convert (ArffLoader.) (CSVSaver.) s))
 
+(s/fdef arff->csv
+        :args (s/cat :s string?)
+        :ret string?)
+
 (defn csv->arff
   "Converts csv to arff"
   [s]
   (convert (CSVLoader.) (ArffSaver.) s))
+
+(s/fdef csv->arff
+        :args (s/cat :s string?)
+        :ret string?)
 
 (defn convert-type
   "Converts string to another datatype if matches"
@@ -40,6 +52,11 @@
     (catch Exception _
       value)))
 
+(s/fdef convert-type
+        :args (s/cat :value string?)
+        :ret #(or (string? %)
+                  (number? %)
+                  (boolean? %)))
 
 (defn csv->edn
   "Converts csv to edn"
@@ -48,6 +65,10 @@
     (map #(-> (zipmap header %)
               (walk/keywordize-keys))
          (map #(map convert-type %) rows))))
+
+(s/fdef csv->edn
+        :args (s/cat :s string?)
+        :ret seq?)
 
 (defn edn->csv
   "Converts edn to csv"
@@ -58,12 +79,26 @@
         csv-header (string/join "," headers)]
     (str (string/join "\n" (cons csv-header csv-rows)) "\n")))
 
+(s/fdef edn->csv
+        :args (s/cat :coll seq?)
+        :ret string?)
+
 (defn edn->arff
   "Converts edn to arff"
   [coll]
   (-> coll edn->csv csv->arff))
 
+(s/fdef edn->arff
+        :args (s/cat :coll seq?)
+        :ret string?)
+
 (defn arff->edn
   "Converts arff to edn"
   [arff]
   (-> arff arff->csv csv->edn))
+
+(s/fdef arff->edn
+        :args (s/cat :arff string?)
+        :ret seq?)
+
+(st/instrument)
