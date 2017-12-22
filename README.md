@@ -2,6 +2,8 @@
 
 Clojure wrapper for the java machine learning library weka
 
+[![Clojars Project](https://img.shields.io/clojars/v/clj-weka.svg)](https://clojars.org/clj-weka)
+
 ## Usage
 
 Convert between csv, arff and edn
