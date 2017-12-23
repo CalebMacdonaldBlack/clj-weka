@@ -36,7 +36,7 @@ Simple K Means clustering
   '({:a 1} {:a 1} {:a 5})
   {:clusters                           2
    :seed                               10
-   :max-canopies-hold-in-mem           100})
+   :max-canopies-hold-in-mem           100
    :min-canopy-density                 2.0
    :canopy-periodic-pruning-rate       10000
    :canopy-t1                          -1.25
@@ -47,6 +47,6 @@ Simple K Means clustering
    :initialization-method              :random
    :max-iterations                     500
    :execution-slots                    1
-   :reduce-distance-calcs-via-canopies false
+   :reduce-distance-calcs-via-canopies false})
 ; => (0 0 1)
 ```
