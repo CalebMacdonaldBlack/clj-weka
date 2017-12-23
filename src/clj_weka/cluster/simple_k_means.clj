@@ -8,7 +8,7 @@
            (java.io InputStream)))
 
 (defn cluster
-  "Assigns each row in the dataset to a cluster"
+  "Returns the a seq of the cluster numbers assigned."
   [dataset
    {seed     :seed
     clusters :clusters
@@ -19,10 +19,8 @@
         loader (CSVLoader.)
         _ (.setSource loader ^InputStream (util/string->stream (convert/edn->csv dataset)))
         instances (.getDataSet loader)
-        _ (.buildClusterer kmeans instances)
-        assignments (.getAssignments kmeans)]
-    (map #(map second %)
-         (vals (group-by first (map vector assignments dataset))))))
+        _ (.buildClusterer kmeans instances)]
+    (seq (.getAssignments kmeans))))
 
 (s/def ::seed int?)
 (s/def ::clusters int?)

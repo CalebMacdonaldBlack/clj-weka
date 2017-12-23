@@ -4,7 +4,7 @@
 
 (deftest cluster-test
   (testing "Clusters correctly"
-    (is (= '(({:a 1} {:a 1}) ({:a 5}))
+    (is (= '(0 0 1)
            (simple-k-means/cluster '({:a 1} {:a 1} {:a 5}) {:clusters 2})))))
 
 (run-tests 'clj-weka.cluster.simple-k-means-test)
